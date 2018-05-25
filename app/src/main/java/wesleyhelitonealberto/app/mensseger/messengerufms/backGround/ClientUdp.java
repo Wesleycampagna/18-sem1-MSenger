@@ -24,7 +24,7 @@ public class ClientUdp implements Runnable {
 
         do{
             try {
-                Thread.sleep(2000);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
 
@@ -38,7 +38,7 @@ public class ClientUdp implements Runnable {
     private void sendMsg(String txt) {
         try {
 
-            clientSocket.setSoTimeout(3000);
+            clientSocket.setSoTimeout(200);
 
             DatagramPacket sendToAllServers;
 
@@ -52,7 +52,7 @@ public class ClientUdp implements Runnable {
             clientSocket.receive(response);
             // atualiza interface conforme as pessoas que estão abertas.
             String data = new String(response.getData(), 0, response.getLength());
-            System.out.println("rcv: " + data);
+            //System.out.println(("[clientUDP] rcv: " + data));
 
         } catch (SocketTimeoutException e) {
             // clientSocket.close();

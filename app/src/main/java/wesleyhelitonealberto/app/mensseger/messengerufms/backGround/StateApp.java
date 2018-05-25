@@ -10,4 +10,8 @@ public class StateApp {
     public static void setIsFim() {
         isFim = true;
     }
+
+    public static void NotIsFim() {
+        isFim = false;
+    }
 }

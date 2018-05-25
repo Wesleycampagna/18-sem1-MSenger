@@ -5,6 +5,8 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
+import wesleyhelitonealberto.app.mensseger.messengerufms.screen.tempChat;
+
 public class LocalServerUdp implements Runnable {
     DatagramSocket socketServerUDP;
     private int size_packet = 32;
@@ -20,19 +22,21 @@ public class LocalServerUdp implements Runnable {
             try {
                 socketServerUDP.receive(packet);
 
-                System.out.println("msg: " + new String(packet.getData(), 0, packet.getLength()));
+                //System.out.println("msg: " + new String(packet.getData(), 0, packet.getLength()));
+
                 returnIfOn(packet);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }while (!StateApp.isFim());
-        System.out.println("----------> serverUDP: saindo...");
+       System.out.println("----------> serverUDP: saindo...");
     }
 
     public void returnIfOn(DatagramPacket packet) throws IOException{
         InetAddress ipCliente = packet.getAddress();
         int portClient = packet.getPort();
-        String ip = InetAddress.getLocalHost().getHostAddress();
+
+        String ip = UtilsNet.getIPAddress(true);
 
         byte[] returnToCliente = ip.getBytes();
 

@@ -4,27 +4,27 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.net.UnknownHostException;
 
 public class StartChat {
-    DataInputStream in;
-    Socket clientSocket;
-    DataOutputStream out;
+    private Socket clientSocket;
+    private DataOutputStream out;
+    private boolean status;
 
-    public void setConnection(String ip, int port) {
+    public void setConnection(Socket clienteSocket) throws UnknownHostException, IOException {
+        status = false;
         try {
-            clientSocket = new Socket(ip, port);
-            out = new DataOutputStream(clientSocket.getOutputStream());
-
+            out = new DataOutputStream(clienteSocket.getOutputStream());
         } catch (IOException e) {
-            System.out.println("erro leitura");
+            System.out.println("DataImputStream");
             e.printStackTrace();
         }
     }
 
     public void sendMsg(String msg) {
         try {
+            System.out.println("msgToSend: " + msg + "#");
             out.write(msg.getBytes(), 0, msg.length());
-            System.out.println("msgToSend: " + msg + "**");
             out.flush();
         } catch (IOException e) {
             System.out.println("erro escrita");
@@ -32,11 +32,11 @@ public class StartChat {
         }
     }
 
-    public void closeSocket() {
-        try {
-            clientSocket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus() {
+        status = true;
     }
 }
